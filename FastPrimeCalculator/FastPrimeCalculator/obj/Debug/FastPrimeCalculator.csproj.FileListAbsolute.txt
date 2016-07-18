@@ -1,0 +1,9 @@
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\bin\Debug\FastPrimeCalculator.exe.config
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\bin\Debug\FastPrimeCalculator.exe
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\bin\Debug\FastPrimeCalculator.pdb
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.csprojResolveAssemblyReference.cache
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.Form1.resources
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.Properties.Resources.resources
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.csproj.GenerateResource.Cache
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.exe
+E:\git_repos\Visual Studio 2015\Projects\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.pdb
