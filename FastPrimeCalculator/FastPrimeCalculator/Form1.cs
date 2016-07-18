@@ -113,7 +113,7 @@ namespace FastPrimeCalculator
         /// </summary>
         /// <param name="primeNumber">The highest prime number value</param>
         /// <param name="numPrimes">The total number of primes so far</param>
-        private void UpdatePrimeNumber(UInt64 primeNumber, UInt64 numPrimes)
+        private void UpdatePrimeNumber(UInt64 primeNumber, int numPrimes)
         {
             HighestPrimeNumber.Text = primeNumber.ToString();
             NumberOfPrimes.Text = numPrimes.ToString();
@@ -127,9 +127,11 @@ namespace FastPrimeCalculator
         protected void CalculatePrimeNumbers()
         {
             // Seed original tested value with 2 which is the lowest POSSIBLE prime number
-            UInt64 ValueTestedForPrime = 2;
-            UInt64 i = 0;
-            UInt64 j = 0;
+            UInt64 valueTestedForPrime = 2;
+            int i = 0;
+
+            // save a prime numbers list to optimize calculations
+            List<UInt64> primeNumbers = new List<ulong>();
 
             // Calculation will run 'forever' until instructed to stop via timer or user interrupt.
             // This first attempt is a simple brute-force, single-threaded calculation but we can
@@ -137,22 +139,32 @@ namespace FastPrimeCalculator
             // to ensure optimizations still produce a valid calculation of prime numbers
             while (true)
             {
-                for (i = 2; i < ValueTestedForPrime; i++)
+                //for (i = 2; i < valueTestedForPrime; i++)
+                //{
+                //    if (valueTestedForPrime % i == 0)
+                //    {
+                //        // Value under test is divisible by a smaller number, therefore NOT prime
+                //        break;
+                //    }
+                //}
+
+                for(i = 0; i<primeNumbers.Count; i++)
                 {
-                    if (ValueTestedForPrime % i == 0)
+                    if (valueTestedForPrime % primeNumbers[i] == 0)
                     {
                         // Value under test is divisible by a smaller number, therefore NOT prime
                         break;
                     }
                 }
-                if(ValueTestedForPrime == i)
+
+                if(primeNumbers.Count == i)
                 {
-                    j++;
                     // PRIME!!!
-                    BeginInvoke(new Action<UInt64,UInt64>(UpdatePrimeNumber), new object[2] { i, j });
+                    primeNumbers.Add(valueTestedForPrime);
+                    BeginInvoke(new Action<UInt64,int>(UpdatePrimeNumber), new object[2] { valueTestedForPrime, primeNumbers.Count });
                 }
 
-                ValueTestedForPrime++;
+                valueTestedForPrime++;
             }
         }
 
