@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastPrimeCalculator", "FastPrimeCalculator\FastPrimeCalculator.csproj", "{0889A92B-D01C-4B8C-8FEE-7E8F91AE6040}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativePrimeNumberCalc", "NativePrimeNumberCalc\NativePrimeNumberCalc.vcxproj", "{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,16 +27,6 @@ Global
 		{0889A92B-D01C-4B8C-8FEE-7E8F91AE6040}.Release|x64.Build.0 = Release|Any CPU
 		{0889A92B-D01C-4B8C-8FEE-7E8F91AE6040}.Release|x86.ActiveCfg = Release|Any CPU
 		{0889A92B-D01C-4B8C-8FEE-7E8F91AE6040}.Release|x86.Build.0 = Release|Any CPU
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Debug|x64.ActiveCfg = Debug|x64
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Debug|x64.Build.0 = Debug|x64
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Debug|x86.ActiveCfg = Debug|Win32
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Debug|x86.Build.0 = Debug|Win32
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Release|Any CPU.ActiveCfg = Release|Win32
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Release|x64.ActiveCfg = Release|x64
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Release|x64.Build.0 = Release|x64
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Release|x86.ActiveCfg = Release|Win32
-		{744801CC-EF99-4E1F-9D4C-5C3B51021CB6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
