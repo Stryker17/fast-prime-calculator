@@ -24,7 +24,7 @@ namespace FastPrimeCalculator
 
         private bool abortMainCalculationThread = false;
 
-        static private int numWorkerThreads = Environment.ProcessorCount;
+        static private int numWorkerThreads = Environment.ProcessorCount * 2;
 
         // save a prime numbers list to optimize calculations
         List<UInt64> primeNumbers = new List<ulong>();
