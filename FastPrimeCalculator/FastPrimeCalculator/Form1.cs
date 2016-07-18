@@ -24,6 +24,20 @@ namespace FastPrimeCalculator
 
         private bool abortMainCalculationThread = false;
 
+        static private int numWorkerThreads = Environment.ProcessorCount;
+
+        // save a prime numbers list to optimize calculations
+        List<UInt64> primeNumbers = new List<ulong>();
+
+        // boolean event to indicate we should abort the worker thread
+        volatile bool abortWorkerThread = false;
+
+        // place to capture the results of each worker thread
+        bool[] workerThreadAppearsPrime = new bool[numWorkerThreads];
+
+        // using threadpool threads does not offer Join, so use an MRE
+        ManualResetEvent[] workerThreadsFinished = new ManualResetEvent[numWorkerThreads];
+
         /// <summary>
         /// Constructor for the basic form UI supporting this application
         /// </summary>
@@ -31,7 +45,10 @@ namespace FastPrimeCalculator
         {
             InitializeComponent();
             calculationTimer = new System.Threading.Timer(new TimerCallback(TimeLimitProc));
-
+            for(int i = 0; i<workerThreadsFinished.Length; i++)
+            {
+                workerThreadsFinished[i] = new ManualResetEvent(false);
+            }
         }
 
         /// <summary>
@@ -135,10 +152,7 @@ namespace FastPrimeCalculator
             UInt64 valueTestedForPrime = 2;
             int i = 0;
 
-            // save a prime numbers list to optimize calculations
-            //List<UInt64> primeNumbers = new List<ulong>();
-
-            Thread[] workerThreads = new Thread[Environment.ProcessorCount];
+            Thread[] workerThreads = new Thread[numWorkerThreads];
 
             // Calculation will run 'forever' until instructed to stop via timer or user interrupt.
             // this method utilizes a prime number lookup table to reduce the number of calculations required.
@@ -147,8 +161,8 @@ namespace FastPrimeCalculator
             // is small and single-threaded may be more efficient.
             while (true)
             {
-                // work on single thread until it's efficient to move to parallel processing
-                if (primeNumbers.Count < 20000)
+                // work on single thread until it's efficient to move to parallel processing (guestimate)
+                if (primeNumbers.Count < 10000)
                 {
                     for (i = 0; i < primeNumbers.Count; i++)
                     {
@@ -177,18 +191,15 @@ namespace FastPrimeCalculator
                     int sectionSize = primeNumbers.Count / workerThreads.Length;
                     for (i = 0; i < workerThreads.Length - 1; i++)
                     {
-                        workerThreads[i] = new Thread(new ParameterizedThreadStart(PrimeCalculationWorker));
-                        object args = new object[4] { valueTestedForPrime, (i * sectionSize), (i * sectionSize + sectionSize - 1), i };
-                        workerThreads[i].Start(args);
+                        workerThreadsFinished[i].Reset();
+                        object args = new object[5] { valueTestedForPrime, (i * sectionSize), (i * sectionSize + sectionSize - 1), i, workerThreadsFinished[i] };
+                        ThreadPool.QueueUserWorkItem(PrimeCalculationWorker, args);
                     }
-                    workerThreads[i] = new Thread(new ParameterizedThreadStart(PrimeCalculationWorker));
-                    object argsEnd = new object[4] { valueTestedForPrime, (i * sectionSize), primeNumbers.Count - 1, i };
-                    workerThreads[i].Start(argsEnd);
+                    workerThreadsFinished[i].Reset();
+                    object argsEnd = new object[5] { valueTestedForPrime, (i * sectionSize), primeNumbers.Count - 1, i, workerThreadsFinished[i] };
+                    ThreadPool.QueueUserWorkItem(PrimeCalculationWorker, argsEnd);
 
-                    for (i = 0; i < workerThreads.Length; i++)
-                    {
-                        workerThreads[i].Join();
-                    }
+                    WaitHandle.WaitAll(workerThreadsFinished);
 
                     if (abortMainCalculationThread)
                     {
@@ -215,42 +226,44 @@ namespace FastPrimeCalculator
             }
         }
 
-        // save a prime numbers list to optimize calculations
-        List<UInt64> primeNumbers = new List<ulong>();
-
-        // boolean event to indicate we should abort the worker thread
-        volatile bool abortWorkerThread = false;
-
-        bool[] workerThreadAppearsPrime = new bool[Environment.ProcessorCount];
-
         /// <summary>
         /// Worker thread to calculate a portion of the prime numbers table
         /// <param name="args">arg1 is the value under test, arg2 is the starting position, arg3 is the ending position in the prime list comparison, arg4 is the thread number</param>
         /// </summary>
         void PrimeCalculationWorker(object args)
         {
-            UInt64 valueTestedForPrime = (UInt64)((Array)args).GetValue(0);
-            int start = (int)((Array)args).GetValue(1);
-            int finish = (int)((Array)args).GetValue(2);
-            int threadNumber = (int)((Array)args).GetValue(3);
-            int i = 0;
-
-            for(i=start; i <= finish; i++)
+            ManualResetEvent threadComplete = (ManualResetEvent)((Array)args).GetValue(4);
+            try
             {
-                if (abortWorkerThread) break;
+                UInt64 valueTestedForPrime = (UInt64)((Array)args).GetValue(0);
+                int start = (int)((Array)args).GetValue(1);
+                int finish = (int)((Array)args).GetValue(2);
+                int threadNumber = (int)((Array)args).GetValue(3);
 
-                if (valueTestedForPrime % primeNumbers[i] == 0)
+                int i = 0;
+
+                for (i = start; i <= finish; i++)
                 {
-                    // Value under test is divisible by a smaller number, therefore NOT prime
-                    abortWorkerThread = true;
-                    break;
+                    if (abortWorkerThread) break;
+
+                    if (valueTestedForPrime % primeNumbers[i] == 0)
+                    {
+                        // Value under test is divisible by a smaller number, therefore NOT prime
+                        abortWorkerThread = true;
+                        break;
+                    }
+                }
+                if (i > finish)
+                {
+                    // appears prime in this section
+                    workerThreadAppearsPrime[threadNumber] = true;
                 }
             }
-            if(i > finish)
+            finally
             {
-                // appears prime in this section
-                workerThreadAppearsPrime[threadNumber] = true;
+                threadComplete.Set();
             }
+
         }
 
 

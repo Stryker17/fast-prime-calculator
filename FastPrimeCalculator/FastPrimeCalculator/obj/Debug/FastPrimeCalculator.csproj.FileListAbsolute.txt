@@ -12,7 +12,7 @@ E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\ob
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.pdb
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\bin\Debug\FastPrimeCalculator.exe
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\bin\Debug\FastPrimeCalculator.pdb
-E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.csprojResolveAssemblyReference.cache
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.Form1.resources
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.Properties.Resources.resources
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.csproj.GenerateResource.Cache
+E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Debug\FastPrimeCalculator.csprojResolveAssemblyReference.cache

@@ -6,4 +6,3 @@ E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\ob
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Release\FastPrimeCalculator.csproj.GenerateResource.Cache
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Release\FastPrimeCalculator.exe
 E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Release\FastPrimeCalculator.pdb
-E:\github_repos\fast-prime-calculator\FastPrimeCalculator\FastPrimeCalculator\obj\Release\FastPrimeCalculator.csprojResolveAssemblyReference.cache
